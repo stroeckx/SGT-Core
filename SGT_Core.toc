@@ -1,0 +1,27 @@
+## Interface: 100000
+## Title: SGT Core - Stroeckx Goldmaking Toolkit
+## Notes: Core module required for all other modules.
+## Author: Stroeckx
+## Version: v1.0
+## SavedVariables: SGTCoreDB
+## OptionalDeps: Ace3
+## X-Embeds: Ace3
+
+libs\LibStub\LibStub.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+#@no-lib-strip@
+libs\AceAddon-3.0\AceAddon-3.0.xml
+libs\AceConsole-3.0\AceConsole-3.0.xml
+libs\AceEvent-3.0\AceEvent-3.0.xml
+libs\AceLocale-3.0\AceLocale-3.0.xml
+libs\AceDB-3.0\AceDB-3.0.xml
+libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+Libs\LibDBIcon-1.0\lib.xml
+#@end-no-lib-strip@
+
+#--Locale Translations
+Locales\Locales.xml
+
+init.lua
+embeds.xml
+core.lua
