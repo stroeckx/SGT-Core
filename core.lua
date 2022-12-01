@@ -45,8 +45,9 @@ function SGTCore:OnInitialize()
 end
 
 --Variables start
-local SGTCoreVersion = "v1.0";
-
+SGTCore.majorVersion = 1;
+SGTCore.subVersion = 0;
+SGTCore.minorVersion = 1;
 local tabFramesToCreate = {};
 local tabFrames = {};
 local tabList = nil;
@@ -129,7 +130,7 @@ function SGTCore:GetMainFrame(parent)
 		--version text
 		local versionText = f:CreateFontString(nil,"ARTWORK", "GameFontHighlight"); 
 		versionText:SetPoint("BOTTOMLEFT", f, "BOTTOMLEFT", 5, 5);
-		versionText:SetText(SGTCoreVersion);
+		versionText:SetText(SGTCore:GetVersionString());
 
 		--Resizing start
 		f:SetResizable(true)
@@ -175,7 +176,7 @@ function SGTCore:GetMainFrame(parent)
 		--Close Button end
 
 		--add core frame
-		SGTCore:AddTabWithFrame("SGTCore", SGTCore.L["Core"], SGTCore.L["Core"], SGTCoreVersion, SGTCore.OnCoreFrameCreated);
+		SGTCore:AddTabWithFrame("SGTCore", SGTCore.L["Core"], SGTCore.L["Core"], SGTCore:GetVersionString(), SGTCore.OnCoreFrameCreated);
 
 		--create frames
 		local idx = 1;
@@ -294,6 +295,23 @@ function SGTCore:AddAnchoredFontString(name, parent, parent2, horizontalOffset, 
 	text:SetText(textValue);
 	text:SetJustifyH("LEFT");
 	return text;
+end
+
+function SGTCore:GetVersionString()
+    return tostring(SGTCore.majorVersion) .. "." .. tostring(SGTCore.subVersion) .. "." .. tostring(SGTCore.minorVersion);
+end
+
+function SGTCore:DoVersionCheck(major, sub, minor, addon)
+    if(addon.majorVersion == nil or addon.majorVersion < major) then
+        return false;
+    end
+    if(addon.subVersion == nil or addon.subVersion < sub) then
+        return false;
+    end
+    if(addon.minorVersion == nil or addon.minorVersion < minor) then
+        return false;
+    end
+    return true;
 end
 
 function SGTCore:DebugPrintTable(table1, table2, table3, table4)
