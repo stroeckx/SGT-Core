@@ -34,18 +34,20 @@ function SGTCore:OnInitialize()
 				relativePoint = "CENTER",
 				ofsx = 0,
 				ofsy = 0,
-				w = 1115,
+				w = 655,
 				h = 655,
 			},
         }
     });
-    SGTIcon:Register("StroeckxGoldmakingToolkit", SGTCoreLDB, SGTCore.db.profile.minimap)
+    SGTIcon:Register("StroeckxGoldmakingToolkit", SGTCoreLDB, SGTCore.db.profile.minimap);
+	SGTCore:RegisterChatCommand("sgt", "HandleChatCommand");
+	SGTCore:RegisterChatCommand("sgtToggleMinimapIcon", "sgtToggleMinimapIcon");
 end
 
 --Variables start
 SGTCore.majorVersion = 1;
 SGTCore.subVersion = 0;
-SGTCore.minorVersion = 2;
+SGTCore.minorVersion = 3;
 local tabFramesToCreate = {};
 local tabFrames = {};
 local tabList = nil;
@@ -64,20 +66,29 @@ function SGTCore:HandleChatCommand(input)
 	end
 end
 
+function SGTCore:sgtToggleMinimapIcon()
+	SGTCore.db.profile.minimap.hide = not SGTCore.db.profile.minimap.hide;
+
+	if(SGTCore.db.profile.minimap.hide) then
+		SGTIcon:Hide("StroeckxGoldmakingToolkit");
+	else
+		SGTIcon:Show("StroeckxGoldmakingToolkit");
+	end
+end
+
 function SGTCore:GetMainFrame(parent)
 	if not SGTCore.mainFrame then
 		--main frame start
 		local mainFrameWidth = tonumber(SGTCore.db.profile.frame.w)
 		local mainFrameHeight = tonumber(SGTCore.db.profile.frame.h)
 		if(mainFrameWidth == nil) then
-			mainFrameWidth = 1115
+			mainFrameWidth = 655
 		end
 		if(mainFrameHeight == nil) then
 			mainFrameHeight = 655
 		end
 		local Backdrop = {
-			bgFile = "Interface\\AddOns\\LegendaryStockTracker\\Assets\\Plain.tga",
-			--edgeFile = temp,
+			bgFile = "Interface\\AddOns\\SGT_Core\\Assets\\Plain.tga",
 			tile = false, tileSize = 0, edgeSize = 1,
 			insets = {left = 1, right = 1, top = 1, bottom = 1},
 		}
@@ -91,11 +102,11 @@ function SGTCore:GetMainFrame(parent)
 		f:SetToplevel(true)
 		f:SetClampedToScreen(true)
 		f:SetPoint(
-		frameConfig.point,
-		frameConfig.relativeFrame,
-		frameConfig.relativePoint,
-		frameConfig.ofsx,
-		frameConfig.ofsy
+			frameConfig.point,
+			frameConfig.relativeFrame,
+			frameConfig.relativePoint,
+			frameConfig.ofsx,
+			frameConfig.ofsy
 		)
 		tinsert(UISpecialFrames, f:GetName())
 		SGTCore:SetFrameMovable(f)
