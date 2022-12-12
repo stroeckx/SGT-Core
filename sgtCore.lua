@@ -47,7 +47,7 @@ end
 --Variables start
 SGTCore.majorVersion = 1;
 SGTCore.subVersion = 0;
-SGTCore.minorVersion = 3;
+SGTCore.minorVersion = 4;
 local tabFramesToCreate = {};
 local tabFrames = {};
 local tabList = nil;
@@ -357,31 +357,3 @@ function SGTCore:DebugPrintTable(table1, table2, table3, table4)
     end
 end
 
-function SGTCore:AddDropdownMenu(name, parent, anchor, heightOffset, width, text, options, valueChangedCallback, currentValueGetter)
-	local dropDown = CreateFrame("FRAME", name, parent, BackdropTemplateMixin and "UIDropDownMenuTemplate")
-	dropDown:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", -20, heightOffset);
-	UIDropDownMenu_SetWidth(dropDown, width)
-	UIDropDownMenu_SetText(dropDown, text)
-	UIDropDownMenu_Initialize(dropDown, function(self, level, menuList)
-		local info = UIDropDownMenu_CreateInfo()
-			if (level or 1) == 1 then
-				for _, title in ipairs(options) do
-				info.text = title;
-				info.menuList = title;
-				info.arg1 = title;
-				info.func = self.SetValue;
-				if(title == currentValueGetter()) then
-					info.checked = true;
-				else
-					info.checked = false;
-				end
-				UIDropDownMenu_AddButton(info)
-				end
-			end
-	end)
-
-	function dropDown:SetValue(value)
-		valueChangedCallback("dummy", value, dropDown);
-	end
-	return heightOffset - 20;
-end
