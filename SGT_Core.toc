@@ -2,7 +2,7 @@
 ## Title: SGT Core - Stroeckx Goldmaking Toolkit
 ## Notes: Core module required for all other modules.
 ## Author: Stroeckx
-## Version: v1.0.4
+## Version: v1.0.5
 ## SavedVariables: SGTCoreDB
 ## OptionalDeps: Ace3
 ## X-Embeds: Ace3
@@ -23,6 +23,5 @@ Libs\LibDBIcon-1.0\lib.xml
 Locales\Locales.xml
 
 init.lua
-embeds.xml
 optionCreators.lua
 sgtCore.lua
