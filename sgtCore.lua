@@ -47,7 +47,7 @@ end
 --Variables start
 SGTCore.majorVersion = 1;
 SGTCore.subVersion = 0;
-SGTCore.minorVersion = 5;
+SGTCore.minorVersion = 6;
 local tabFramesToCreate = {};
 local tabFrames = {};
 local tabList = nil;
