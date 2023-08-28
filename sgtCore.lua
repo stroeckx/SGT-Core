@@ -47,7 +47,9 @@ end
 --Variables start
 SGTCore.majorVersion = 1;
 SGTCore.subVersion = 0;
-SGTCore.minorVersion = 6;
+SGTCore.minorVersion = 7;
+SGTCore.fontStringPools = {};
+SGTCore.backgroundLinePools = {};
 local tabFramesToCreate = {};
 local tabFrames = {};
 local tabList = nil;
@@ -55,6 +57,7 @@ local tabWidth = 150;
 local tabHeight = 24;
 local contentWidthOffset = 5;
 local contentHeightOffset = -25;
+
 --Variables end
 
 function SGTCore:HandleChatCommand(input)
@@ -199,6 +202,19 @@ function SGTCore:GetMainFrame(parent)
 		end
 	end
 	return SGTCore.mainFrame
+end
+
+function SGTCore:PrepareTablePools(frame, pool)
+	if(SGTCore.fontStringPools[pool] == nil) then
+		SGTCore.fontStringPools[pool] = CreateFontStringPool(frame, "OVERLAY", nil, "GameFontNormal", FontStringPool_Hide)
+	else
+		SGTCore.fontStringPools[pool]:ReleaseAll()
+	end
+	if(SGTCore.backgroundLinePools[pool] == nil) then
+		SGTCore.backgroundLinePools[pool] = CreateFramePool("Frame", nil, BackdropTemplateMixin and "BackdropTemplate")
+	else
+		SGTCore.backgroundLinePools[pool]:ReleaseAll()
+	end
 end
 
 function SGTCore:OnCoreFrameCreated()
@@ -357,3 +373,9 @@ function SGTCore:DebugPrintTable(table1, table2, table3, table4)
     end
 end
 
+function SGTCore:GetTextColor(color)
+	if 		color == "yellow" 	then return 1, 0.9, 0, 1
+	elseif  color == "white" 	then return 1, 1, 1, 1
+	elseif  color == "legendary" 	then return 1, 0.5, 0, 1
+	end
+end

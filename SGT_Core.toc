@@ -1,11 +1,12 @@
-## Interface: 100007
+## Interface: 100105
 ## Title: SGT Core - Stroeckx Goldmaking Toolkit
 ## Notes: Core module required for all other modules.
 ## Author: Stroeckx
-## Version: v1.0.6
+## Version: v1.0.7
 ## SavedVariables: SGTCoreDB
 ## OptionalDeps: Ace3
 ## X-Embeds: Ace3
+## IconTexture: Interface\AddOns\SGT_Core\SGT_logo
 
 libs\LibStub\LibStub.lua
 libs\CallbackHandler-1.0\CallbackHandler-1.0.lua

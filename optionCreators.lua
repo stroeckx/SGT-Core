@@ -108,3 +108,87 @@ function SGTCore:AddButton(name, parent, anchor, width, height, label, onClick)
 	end)
 	return button
 end
+
+function SGTCore:AddEmptyFrame(name, parent, anchor)
+	local blankFrame = CreateFrame("Frame", name .. "Wrapper", parent);
+	blankFrame:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -5);
+	blankFrame:SetPoint("BOTTOMRIGHT", parent, "BOTTOMRIGHT", -5, 5);
+	--blankFrame:SetSize(200,200);
+	return blankFrame
+end
+
+function SGTCore:CreateFrameSheet(frame, pool, table, numColumns)
+	SGTCore:PrepareTablePools(frame, pool)
+	local sheet  = {}
+	local maxWidth = {}
+	local xStartValue = 0
+	local xPosition = xStartValue
+	local yPosition = 0
+	local YDIFF = 15
+	local XDIFF = 15
+	local Backdrop = {
+		bgFile = "Interface\\AddOns\\SGT_Core\\Assets\\Plain.tga",
+		tile = false, tileSize = 0, edgeSize = 1,
+		insets = {left = 0, right = 0, top = 0, bottom = 1},
+	}
+	maxWidth = {}
+	for i=1, numColumns do
+		maxWidth[i] = 0
+	end
+
+	for i=1, #table do 
+		for j=1, #table[i] do
+			SGTCore:CompareTableValue(frame, maxWidth, j, table[i][j][2])
+		end
+	end
+	for i=1, #table do
+		local backgroundLine = SGTCore.backgroundLinePools[pool]:Acquire();
+		backgroundLine:SetParent(frame);
+		backgroundLine:Show();
+		backgroundLine:SetPoint("TOPLEFT", 0, yPosition);
+		backgroundLine:SetHeight(YDIFF);
+		backgroundLine:SetBackdrop(Backdrop);
+		backgroundLine:SetBackdropColor(0.2,0.2,0.2,((i+1)%2) * 0.5);
+
+		for j=1, #table[i] do
+			table[i][j][1]:SetParent(backgroundLine);
+			SGTCore:SetElementPosition(table[i][j][1], xPosition, 0);
+			SGTCore:DebugPrintTable(table[i][j][1]);
+			table[i][j][1]:SetText("WTF");
+			xPosition = xPosition + XDIFF + maxWidth[j];
+		end
+		backgroundLine:SetWidth(xPosition - XDIFF);
+		xPosition = xStartValue;
+		yPosition = yPosition - YDIFF;
+	end
+end
+
+function SGTCore:CompareTableValue(frame, table, index, toCompare)
+	if (toCompare > table[index]) then
+		table[index] = toCompare
+	end
+end
+
+function SGTCore:SetElementPosition(element, x, y)
+	element:SetPoint("LEFT", x, 0);
+	element:SetPoint("TOP", 0, y);
+end
+
+function SGTCore:CreateTableElement(frame, pool, text, r, g, b, a)
+	local fontString = SGTCore.fontStringPools[pool]:Acquire();
+	fontString:SetParent(frame);
+	fontString:SetTextColor(r,g,b,a);
+	print("--")
+	print(r)
+	print(a)
+	fontString:SetJustifyH("LEFT");
+	fontString:SetJustifyV("MIDDLE");
+	fontString:SetPoint("LEFT", 15, 0);
+	fontString:SetPoint("TOP", 0, -15);
+	--print(text)
+	fontString:SetText(text);
+	fontString:Show();
+	--fontString:SetSize(100,50);
+	--print("created")
+	return {fontString, fontString:GetStringWidth(text)}
+end
