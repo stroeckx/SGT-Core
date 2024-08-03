@@ -1,8 +1,8 @@
-## Interface: 100207
+## Interface: 110000
 ## Title: SGT Core - Stroeckx Goldmaking Toolkit
 ## Notes: Core module required for all other modules.
 ## Author: Stroeckx
-## Version: v1.0.8
+## Version: v1.0.9
 ## SavedVariables: SGTCoreDB
 ## OptionalDeps: Ace3
 ## X-Embeds: Ace3
