@@ -47,7 +47,7 @@ end
 --Variables start
 SGTCore.majorVersion = 1;
 SGTCore.subVersion = 0;
-SGTCore.minorVersion = 10;
+SGTCore.minorVersion = 11;
 SGTCore.fontStringPools = {};
 SGTCore.backgroundLinePools = {};
 local tabFramesToCreate = {};
@@ -76,6 +76,10 @@ function SGTCore:sgtToggleMinimapIcon()
 		SGTIcon:Hide("StroeckxGoldmakingToolkit");
 	else
 		SGTIcon:Show("StroeckxGoldmakingToolkit");
+	end
+
+	if(SGTCore.dbIconEnabledCheckbox) then 
+		SGTCore.dbIconEnabledCheckbox:SetChecked(SGTCore.db.profile.minimap.hide);
 	end
 end
 
@@ -219,7 +223,11 @@ end
 
 function SGTCore:OnCoreFrameCreated()
 	local coreFrame = SGTCore:GetTabFrame("SGTCore");
-	local coreDescription = SGTCore:AddAnchoredFontString("SGTCoreDescriptionsText", coreFrame.scrollframe.scrollchild, coreFrame, 5, -5, SGTCore.L["SGTCoreDescription"], coreFrame);
+	local scrollchild = coreFrame.scrollframe.scrollchild;
+	local anchor = SGTCore:AddInitialAnchor("Anchor", scrollchild, coreFrame);
+	local coreDescription = SGTCore:AddAnchoredFontString("SGTCoreDescriptionsText", scrollchild, anchor, 0, 0, SGTCore.L["SGTCoreDescription"]);
+    local settingsHeader = SGTCore:AddAnchoredFontString("SGTCoreSettingsheader", scrollchild, coreDescription, 0, -15, SGTCore.L["Settings"]);
+	SGTCore.dbIconEnabledCheckbox = SGTCore:AddOptionCheckbox("SGTCoreDbIconEnabledCheckbox", scrollchild, settingsHeader, SGTCore.db.profile.minimap.hide, SGTCore.L["HideDBIcon"], SGTCore.sgtToggleMinimapIcon)
 end
 
 function SGTCore:AddTabWithFrame(name, title, tabName, version, onFrameCreated)
@@ -269,8 +277,9 @@ function SGTCore:CreateCoreFrameTab(name, parent, backdrop)
 	f.scrollframe:SetPoint("BOTTOM")
 
 	frameScrollChild = f.scrollframe.scrollchild or CreateFrame("Frame", name .. "ScrollChild", f.scrollframe);
-	frameScrollChild:SetSize(f.scrollframe:GetSize())
-	f.scrollframe:SetScrollChild(frameScrollChild)
+	frameScrollChild:SetSize(f.scrollframe:GetSize());
+	frameScrollChild:SetPoint("RIGHT", f.scrollframe, "RIGHT", -10);
+	f.scrollframe:SetScrollChild(frameScrollChild);
 	f.scrollframe.scrollchild = frameScrollChild;
 
 	return f;
@@ -308,18 +317,6 @@ function SGTCore:TabOnClick(self)
 	end
 	activeTab = self
 	self.content:Show()
-end
-
-function SGTCore:AddAnchoredFontString(name, parent, parent2, horizontalOffset, verticalOffset, textValue, topAnchor, font)
-	if(font == nil) then
-		font = "GameFontHighlight";
-	end
-	local text = parent:CreateFontString(name,"ARTWORK", font);
-	text:SetPoint("TOPLEFT", topAnchor, "TOPLEFT", horizontalOffset, verticalOffset)
-	text:SetPoint("RIGHT", parent2, "RIGHT", -horizontalOffset)
-	text:SetText(textValue);
-	text:SetJustifyH("LEFT");
-	return text;
 end
 
 function SGTCore:GetVersionString()

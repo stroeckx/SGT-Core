@@ -192,3 +192,23 @@ function SGTCore:CreateTableElement(frame, pool, text, r, g, b, a)
 	--print("created")
 	return {fontString, fontString:GetStringWidth(text)}
 end
+
+function SGTCore:AddAnchoredFontString(name, parent, anchor, horizontalOffset, verticalOffset, textValue, font)
+	if(font == nil) then
+		font = "GameFontHighlight";
+	end
+	local text = parent:CreateFontString(name,"ARTWORK", font);
+	text:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", horizontalOffset, verticalOffset)
+	text:SetPoint("RIGHT", anchor, "RIGHT", -horizontalOffset)
+	text:SetText(textValue);
+	text:SetJustifyH("LEFT");
+	return text;
+end
+
+function SGTCore:AddInitialAnchor(name, parent, anchor)
+	local anchorFrame = CreateFrame("Frame", name, parent);
+	anchorFrame:SetPoint("TOPLEFT", anchor, "TOPLEFT", 100)
+	anchorFrame:SetPoint("RIGHT", anchor, "RIGHT", -100)
+	anchorFrame:SetHeight(1);
+	return anchorFrame;
+end
