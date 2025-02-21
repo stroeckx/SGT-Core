@@ -47,7 +47,7 @@ end
 --Variables start
 SGTCore.majorVersion = 1;
 SGTCore.subVersion = 0;
-SGTCore.minorVersion = 12;
+SGTCore.minorVersion = 13;
 SGTCore.fontStringPools = {};
 SGTCore.backgroundLinePools = {};
 local tabFramesToCreate = {};
