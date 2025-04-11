@@ -2,11 +2,23 @@
 ## Title: SGT Core - Stroeckx Goldmaking Toolkit
 ## Notes: Core module required for all other modules.
 ## Author: Stroeckx
-## Version: v1.0.14
+## Version: v1.0.15
 ## SavedVariables: SGTCoreDB
 ## OptionalDeps: Ace3
 ## X-Embeds: Ace3
 ## IconTexture: Interface\AddOns\SGT_Core\SGT_logo
+
+## Category-enUS: Professions
+## Category-deDE: Berufe
+## Category-esES: Profesiones
+## Category-esMX: Profesiones
+## Category-frFR: Métiers
+## Category-itIT: Professioni
+## Category-koKR: 전문 기술
+## Category-ptBR: Profissões
+## Category-ruRU: Профессии
+## Category-zhCN: 专业
+## Category-zhTW: 專業技能
 
 libs\LibStub\LibStub.lua
 libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
